@@ -5,14 +5,13 @@ from medacy.pipeline_components import MetaMap
 
 import logging,sys
 
-
 # print logs
 logging.basicConfig(stream=sys.stdout,level=logging.DEBUG) #set level=logging.DEBUG for more information
 
 #entity types
-entities = ['Symptom','Drug']
+entities = ['ADR','Drug', 'Symptom']
 
-training_dataset = Dataset('/home/mahendrand/VE/Data/N2C2_END/symptom')
+training_dataset = Dataset('/home/mahendrand/VE/Data/CADEC/converted')
 
 #set metamap path
 metamap = MetaMap(metamap_path="/home/share/programs/metamap/2016/public_mm/bin/metamap", convert_ascii=True)

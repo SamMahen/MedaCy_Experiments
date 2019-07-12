@@ -10,9 +10,9 @@ import logging,sys
 logging.basicConfig(stream=sys.stdout,level=logging.DEBUG) #set level=logging.DEBUG for more information
 
 #entity types
-entities = ['Symptom','Drug']
+entities = ['ADE','Drug', 'Dose']
 
-training_dataset = Dataset('/home/mahendrand/VE/Data/N2C2_END/symptom')
+training_dataset = Dataset('/home/mahendrand/VE/Data/MADE/training')
 
 #set metamap path
 metamap = MetaMap(metamap_path="/home/share/programs/metamap/2016/public_mm/bin/metamap", convert_ascii=True)

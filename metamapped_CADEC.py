@@ -1,5 +1,4 @@
 from medacy.data import Dataset
-# from medacy.ner.pipelines import ClinicalPipeline
 from medacy.ner.pipelines import SystematicReviewPipeline
 from medacy.ner.model import Model
 from medacy.pipeline_components import MetaMap
@@ -12,13 +11,13 @@ logging.basicConfig(stream=sys.stdout,level=logging.DEBUG) #set level=logging.DE
 #entity types
 entities = ['Reason', 'ADE', 'Drug']
 
-training_dataset = Dataset('/home/mahendrand/VE/Data/END/drug')
-# dirPred = '/home/mahendrand/VE/Predictions/CV/END'
+training_dataset = Dataset('/home/mahendrand/VE/Data/CADEC/converted')
+# dirPred = '/home/mahendrand/VE/Data/preds/CV/CADEC'
 #set metamap path
 metamap = MetaMap(metamap_path="/home/share/programs/metamap/2016/public_mm/bin/metamap", convert_ascii=True)
 training_dataset.metamap(metamap)
 
-# pipeline = ClinicalPipeline(metamap=metamap, entities=entities)
+
 pipeline = SystematicReviewPipeline(metamap=metamap, entities=entities)
 model = Model(pipeline, n_jobs=1) #distribute documents between 30 processes during training and prediction
 
@@ -30,14 +29,14 @@ model.fit(training_dataset)
 #location to store the clinical model
 # model.dump('/home/mahendrand/VE/SMM4H/medaCy/medacy/clinical_model.pickle')
 
-#run on a separate testing dataset
-testing_dataset_N2C2 = Dataset('/home/mahendrand/VE/Data/N2C2/data')
+# run on a separate testing dataset
+testing_dataset_END = Dataset('/home/mahendrand/VE/Data/END/drug')
 
 # location to store the predictions
-model.predict(testing_dataset_N2C2, prediction_directory='/home/mahendrand/VE/Predictions/cross_domain/END_N2C2')
+model.predict(testing_dataset_END, prediction_directory='/home/mahendrand/VE/Predictions/cross_domain/CADEC_END')
 
 #run on a separate testing dataset
-testing_dataset_CADEC = Dataset('/home/mahendrand/VE/Data/CADEC/converted')
+testing_dataset_CADEC = Dataset('/home/mahendrand/VE/Data/N2C2/data')
 
 # location to store the predictions
-model.predict(testing_dataset_CADEC, prediction_directory='/home/mahendrand/VE/Predictions/cross_domain/END_CADEC')
+model.predict(testing_dataset_CADEC, prediction_directory='/home/mahendrand/VE/Predictions/cross_domain/CADEC_N2C2')
